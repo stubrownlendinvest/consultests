@@ -1,4 +1,4 @@
 FROM ubuntu
-RUN apt-get install ping
+RUN apt-get install iputils-ping
 COPY envconsul /usr/local/bin/envconsul
 COPY runtest.sh /var/local/bin/runtest.sh
