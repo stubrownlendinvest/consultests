@@ -1,6 +1,8 @@
 #!/bin/bash
+tmp1=$@
+
 while(true)
 do
-sleep 5
+echo $tmp1
+sleep 2
 done
-env
