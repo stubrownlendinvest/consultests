@@ -44,7 +44,7 @@ cat <<EOT > build_all.yaml
         owner: ec2-user
         group: ec2-user
         recurse: yes
-        with_items: ["/etc/consul.d","/var/lib/consul","/usr/share/consul-ui"]
+      with_items: ["/etc/consul.d","/var/lib/consul","/usr/share/consul-ui"]
       become: true
       
         
