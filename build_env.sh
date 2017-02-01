@@ -2,6 +2,9 @@
 sudo yum update -y
 sudo yum install ansible --enablerepo=epel -y
 echo "localhost ansible_connection=local" | sudo tee -a /etc/ansible/hosts
+local-ipv4=`curl -s http://169.254.169.254/latest/meta-data/local-ipv4`
+local-hostname=`curl -s http://169.254.169.254/latest/meta-data/local-hostname`
+pwd=`pwd`
 cat <<EOT > build_all.yaml
 ---
 - hosts: all
@@ -33,6 +36,20 @@ cat <<EOT > build_all.yaml
     - name: Installs console
       unarchive: src=https://releases.hashicorp.com/consul/0.7.2/consul_0.7.2_linux_amd64.zip  dest=/usr/local/bin remote_src=True
       become: true
+      
+    - name: Create consul directory
+      file: 
+        path=/etc/consul.d 
+        state=directory 
+      become: true
+      
+    - name: Copying consul config
+      copy:
+        src:
+        dest:
+      become: true
+      
+      
 
 EOT
 
@@ -58,6 +75,28 @@ cat <<EOT > start_vault.sh
 #!/bin/bash
 vault server -config=example.hcl
 EOT
+
+cat <<EOT > consul_config.json
+{
+  "datacenter": "tag_Service_controller",
+  "addresses" : {
+    "http": "10.4.1.239"
+  },
+  "bind_addr": "10.4.1.239",
+  "node_name": "10.4.1.239",
+  "rejoin_after_leave": true,
+  "domain": "consul",
+  "server": true,
+  "verify_incoming": false,
+  "verify_outgoing": false,
+  "data_dir": "/var/lib/consul",
+  "ui_dir": "/usr/share/consul-ui",
+  "disable_remote_exec": false
+}
+
+
+EOT
+
 
 chmod +x *.sh
 
