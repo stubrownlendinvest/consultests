@@ -43,13 +43,7 @@ cat <<EOT > build_all.yaml
         state=directory 
       become: true
       
-    - name: Copying consul config
-      copy:
-        src:
-        dest:
-      become: true
-      
-      
+        
 
 EOT
 
