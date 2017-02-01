@@ -1,3 +1,3 @@
-FROM ubuntu
+FROM nginx
 COPY . .
-CMD envconsul envconsul -consul localhost:8500 -sanitize -prefix stu1/stu2
+CMD yum envconsul envconsul -consul localhost:8500 -sanitize -prefix stu1/stu2
