@@ -39,7 +39,7 @@ cat <<EOT > build_all.yaml
       
     - name: Create consul directories
       file: 
-        path="{{item}}" 
+        path: "{{item}}" 
         state: directory
         owner: ec2-user
         group: ec2-user
