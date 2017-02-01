@@ -37,10 +37,14 @@ cat <<EOT > build_all.yaml
       unarchive: src=https://releases.hashicorp.com/consul/0.7.2/consul_0.7.2_linux_amd64.zip  dest=/usr/local/bin remote_src=True
       become: true
       
-    - name: Create consul directory
+    - name: Create consul directories
       file: 
-        path=/etc/consul.d 
-        state=directory 
+        path="{{item}}" 
+        state=directory
+        owner: ec2-user
+        group: ec2-user
+        recurse: yes
+        with_items: ["/etc/consul.d","/var/lib/consul","/usr/share/consul-ui"]
       become: true
       
         
